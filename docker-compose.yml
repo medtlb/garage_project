@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   app:
-    image: spring_api
+    build: .
+    image: spring_api:latest
     ports:
       - "9090:9090"
     environment:
