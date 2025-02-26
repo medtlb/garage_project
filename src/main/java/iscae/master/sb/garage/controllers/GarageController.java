@@ -2,6 +2,7 @@ package iscae.master.sb.garage.controllers;
 
 import iscae.master.sb.garage.dtos.GarageDto;
 import iscae.master.sb.garage.services.GarageService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,16 +28,19 @@ public class GarageController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Long add(@RequestBody GarageDto garageDto) {
         return garageService.add(garageDto);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Long update(@RequestBody GarageDto garageDto, @PathVariable("id") Long id) {
         return garageService.update(garageDto, id);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(@PathVariable("id") Long id) {
         garageService.deleteById(id);
     }

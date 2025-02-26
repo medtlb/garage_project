@@ -3,6 +3,7 @@ package iscae.master.sb.utilisateur.services;
 import iscae.master.sb.dao.entities.UtilisateurEntity;
 import iscae.master.sb.dao.repositories.UtilisateurRepository;
 import iscae.master.sb.utilisateur.dtos.UtilisateurDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UtilisateurService(UtilisateurRepository utilisateurRepository) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder) {
         this.utilisateurRepository = utilisateurRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UtilisateurDto> getAll() {
@@ -37,6 +40,8 @@ public class UtilisateurService {
         }
 
         UtilisateurEntity utilisateurEntity = utilisateurDto.toEntity();
+        // Encrypt password before saving
+        utilisateurEntity.setPassword(passwordEncoder.encode(utilisateurEntity.getPassword()));
         return utilisateurRepository.save(utilisateurEntity).getId();
     }
 
@@ -54,7 +59,7 @@ public class UtilisateurService {
         utilisateurEntity.setNom(utilisateurDto.getNom());
         utilisateurEntity.setEmail(utilisateurDto.getEmail());
         if (utilisateurDto.getPassword() != null && !utilisateurDto.getPassword().isEmpty()) {
-            utilisateurEntity.setPassword(utilisateurDto.getPassword());
+            utilisateurEntity.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
         }
 
         return utilisateurRepository.saveAndFlush(utilisateurEntity).getId();
