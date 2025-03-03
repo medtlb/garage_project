@@ -42,7 +42,9 @@ public class GarageService {
                 .orElseThrow(() -> new RuntimeException("Garage with ID " + id + " not found"));
 
         garageEntity.setNom(garageDto.getNom());
-        garageEntity.setAddress(garageDto.getAddress());
+        // Removed address
+        garageEntity.setLatitude(garageDto.getLatitude());
+        garageEntity.setLongitude(garageDto.getLongitude());
         garageEntity.setTelephone(garageDto.getTelephone());
         garageEntity.setEmail(garageDto.getEmail());
         garageEntity.setCapacite(garageDto.getCapacite());

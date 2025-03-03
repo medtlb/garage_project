@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 public class GarageDto {
     private Long id;
     private String nom;
-    private String address;
+    // Removed address
+    private Double latitude;
+    private Double longitude;
     private String telephone;
     private String email;
     private Integer capacite;
@@ -22,7 +24,9 @@ public class GarageDto {
         return GarageEntity.builder()
                 .id(id)
                 .nom(nom)
-                .address(address)
+                // Removed address
+                .latitude(latitude)
+                .longitude(longitude)
                 .telephone(telephone)
                 .email(email)
                 .capacite(capacite)
@@ -33,7 +37,9 @@ public class GarageDto {
         return GarageDto.builder()
                 .id(garageEntity.getId())
                 .nom(garageEntity.getNom())
-                .address(garageEntity.getAddress())
+                // Removed address
+                .latitude(garageEntity.getLatitude())
+                .longitude(garageEntity.getLongitude())
                 .telephone(garageEntity.getTelephone())
                 .email(garageEntity.getEmail())
                 .capacite(garageEntity.getCapacite())

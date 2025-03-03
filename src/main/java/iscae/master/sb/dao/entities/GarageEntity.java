@@ -21,8 +21,12 @@ public class GarageEntity {
     @Column(name = "nom", length = 100, nullable = false)
     private String nom;
 
-    @Column(name = "address", length = 200)
-    private String address;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
 
     @Column(name = "telephone", length = 20)
     private String telephone;
