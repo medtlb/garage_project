@@ -1,6 +1,6 @@
 package iscae.master.sb.utilisateur.dtos;
 
-import iscae.master.sb.dao.entities.RoleEntity;
+import iscae.master.sb.dao.entities.Role;
 import iscae.master.sb.dao.entities.UtilisateurEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +16,7 @@ public class UtilisateurDto {
     private String nom;
     private String email;
     private String password;
-    private Short idRole;
-    private String roleNom;  // To display role name in responses
+    private Role role;
 
     public UtilisateurEntity toEntity() {
         return UtilisateurEntity.builder()
@@ -25,7 +24,7 @@ public class UtilisateurDto {
                 .nom(nom)
                 .email(email)
                 .password(password)
-                .role(RoleEntity.builder().id(idRole).build())
+                .role(role)
                 .build();
     }
 
@@ -35,8 +34,7 @@ public class UtilisateurDto {
                 .nom(utilisateurEntity.getNom())
                 .email(utilisateurEntity.getEmail())
                 .password(utilisateurEntity.getPassword())
-                .idRole(utilisateurEntity.getRole().getId())
-                .roleNom(utilisateurEntity.getRole().getNom())
+                .role(utilisateurEntity.getRole())
                 .build();
     }
 }

@@ -1,8 +1,6 @@
 package iscae.master.sb.security.controllers;
 
-import iscae.master.sb.dao.entities.RoleEntity;
 import iscae.master.sb.dao.entities.UtilisateurEntity;
-import iscae.master.sb.dao.repositories.RoleRepository;
 import iscae.master.sb.dao.repositories.UtilisateurRepository;
 import iscae.master.sb.security.dtos.LoginRequest;
 import iscae.master.sb.security.dtos.LoginResponse;
@@ -25,18 +23,15 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UtilisateurRepository utilisateurRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     public AuthController(AuthenticationManager authenticationManager,
                           UtilisateurRepository utilisateurRepository,
-                          RoleRepository roleRepository,
                           PasswordEncoder passwordEncoder,
                           JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.utilisateurRepository = utilisateurRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
@@ -64,14 +59,11 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email already exists");
         }
 
-        RoleEntity role = roleRepository.findById(registerRequest.getIdRole())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
         UtilisateurEntity user = UtilisateurEntity.builder()
                 .nom(registerRequest.getNom())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(role)
+                .role(registerRequest.getRole())
                 .build();
 
         utilisateurRepository.save(user);

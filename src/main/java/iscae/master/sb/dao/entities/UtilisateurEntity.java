@@ -27,7 +27,7 @@ public class UtilisateurEntity {
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
-    private RoleEntity role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 }

@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return User.builder()
                 .username(utilisateur.getEmail())
                 .password(utilisateur.getPassword())
-                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().getNom().toUpperCase())))
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name())))
                 .build();
     }
 }
