@@ -2,6 +2,9 @@ package iscae.master.sb.reservation.controllers;
 
 import iscae.master.sb.reservation.dtos.ReservationDto;
 import iscae.master.sb.reservation.services.ReservationService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -20,9 +23,9 @@ public class ReservationController {
         return reservationService.getAll();
     }
 
-    @GetMapping("/user/{userId}")
-    public List<ReservationDto> getByUserId(@PathVariable("userId") Long userId) {
-        return reservationService.getByUserId(userId);
+    @GetMapping("/user")
+    public List<ReservationDto> getCurrentUserReservations() {
+        return reservationService.getCurrentUserReservations();
     }
 
     @GetMapping("/{id}")
@@ -32,7 +35,7 @@ public class ReservationController {
 
     @PostMapping
     public Long add(@RequestBody ReservationDto reservationDto) {
-        return reservationService.add(reservationDto);
+        return reservationService.addForCurrentUser(reservationDto);
     }
 
     @PutMapping("/{id}")

@@ -21,9 +21,9 @@ public class VoitureController {
         return voitureService.getAll();
     }
 
-    @GetMapping("/user/{userId}")
-    public List<VoitureDto> getByUserId(@PathVariable("userId") Long userId) {
-        return voitureService.getByUserId(userId);
+    @GetMapping("/user")
+    public List<VoitureDto> getCurrentUserVoitures() {
+        return voitureService.getCurrentUserVoitures();
     }
 
     @GetMapping("/{id}")
@@ -33,7 +33,7 @@ public class VoitureController {
 
     @PostMapping
     public Long add(@RequestBody VoitureDto voitureDto) {
-        return voitureService.add(voitureDto);
+        return voitureService.addForCurrentUser(voitureDto);
     }
 
     @PutMapping("/{id}")
