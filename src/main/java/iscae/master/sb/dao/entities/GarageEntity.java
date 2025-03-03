@@ -34,6 +34,10 @@ public class GarageEntity {
     @Column(name = "email", length = 100)
     private String email;
 
+    @Column(name = "categorie", length = 50, nullable = true)
+    @Enumerated(EnumType.STRING)
+    private VehiculeCategorie categorie;
+
     @Column(name = "capacite")
     private Integer capacite;
 }

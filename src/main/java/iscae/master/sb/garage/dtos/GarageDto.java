@@ -1,6 +1,7 @@
 package iscae.master.sb.garage.dtos;
 
 import iscae.master.sb.dao.entities.GarageEntity;
+import iscae.master.sb.dao.entities.VehiculeCategorie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class GarageDto {
     private String telephone;
     private String email;
     private Integer capacite;
+    private VehiculeCategorie categorie;
+
+// Update toEntity and fromEntity methods accordingly
 
     public GarageEntity toEntity() {
         return GarageEntity.builder()
@@ -30,6 +34,7 @@ public class GarageDto {
                 .telephone(telephone)
                 .email(email)
                 .capacite(capacite)
+                .categorie(categorie)
                 .build();
     }
 
@@ -43,6 +48,7 @@ public class GarageDto {
                 .telephone(garageEntity.getTelephone())
                 .email(garageEntity.getEmail())
                 .capacite(garageEntity.getCapacite())
+                .categorie(garageEntity.getCategorie())
                 .build();
     }
 }
