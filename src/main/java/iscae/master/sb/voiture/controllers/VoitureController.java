@@ -42,10 +42,10 @@ public class VoitureController {
         return voitureService.getById(id);
     }
 
-    @PostMapping
-    public Long add(@RequestBody VoitureDto voitureDto) {
-        return voitureService.addForCurrentUser(voitureDto);
-    }
+//    @PostMapping
+//    public Long add(@RequestBody VoitureDto voitureDto) {
+//        return voitureService.addForCurrentUser(voitureDto);
+//    }
 
     @PostMapping(value = "/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Long addWithImage(
@@ -65,10 +65,10 @@ public class VoitureController {
         return voitureService.addForCurrentUserWithImage(voitureDto, file);
     }
 
-    @PutMapping("/{id}")
-    public Long update(@RequestBody VoitureDto voitureDto, @PathVariable("id") Long id) {
-        return voitureService.update(voitureDto, id);
-    }
+//    @PutMapping("/{id}")
+//    public Long update(@RequestBody VoitureDto voitureDto, @PathVariable("id") Long id) {
+//        return voitureService.update(voitureDto, id);
+//    }
 
     @PutMapping(value = "/{id}/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Long updateWithImage(

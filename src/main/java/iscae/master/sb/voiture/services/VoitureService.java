@@ -60,33 +60,33 @@ public class VoitureService {
                 .orElseThrow(() -> new RuntimeException("Voiture with ID " + id + " not found"));
     }
 
-    @Transactional
-    public Long addForCurrentUser(VoitureDto voitureDto) {
-        // Get the current authenticated user's email
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        System.out.println("Adding car for user: " + currentUsername);
-
-        // Find the user by email
-        UtilisateurEntity currentUser = utilisateurRepository.findByEmail(currentUsername)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Check if immatriculation already exists
-        if (voitureRepository.existsByImmatriculation(voitureDto.getImmatriculation())) {
-            throw new RuntimeException("Immatriculation already exists");
-        }
-
-        // Create voiture entity
-        VoitureEntity voitureEntity = voitureDto.toEntity();
-
-        // Set the current user as the utilisateur
-        voitureEntity.setUtilisateur(currentUser);
-
-        // Save the vehicle
-        VoitureEntity savedEntity = voitureRepository.save(voitureEntity);
-        System.out.println("Car saved with ID: " + savedEntity.getId());
-        return savedEntity.getId();
-    }
+//    @Transactional
+//    public Long addForCurrentUser(VoitureDto voitureDto) {
+//        // Get the current authenticated user's email
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUsername = authentication.getName();
+//        System.out.println("Adding car for user: " + currentUsername);
+//
+//        // Find the user by email
+//        UtilisateurEntity currentUser = utilisateurRepository.findByEmail(currentUsername)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Check if immatriculation already exists
+//        if (voitureRepository.existsByImmatriculation(voitureDto.getImmatriculation())) {
+//            throw new RuntimeException("Immatriculation already exists");
+//        }
+//
+//        // Create voiture entity
+//        VoitureEntity voitureEntity = voitureDto.toEntity();
+//
+//        // Set the current user as the utilisateur
+//        voitureEntity.setUtilisateur(currentUser);
+//
+//        // Save the vehicle
+//        VoitureEntity savedEntity = voitureRepository.save(voitureEntity);
+//        System.out.println("Car saved with ID: " + savedEntity.getId());
+//        return savedEntity.getId();
+//    }
 
     @Transactional
     public Long addForCurrentUserWithImage(VoitureDto voitureDto, MultipartFile file) {
@@ -132,27 +132,27 @@ public class VoitureService {
         return savedEntity.getId();
     }
 
-    @Transactional
-    public Long update(VoitureDto voitureDto, Long id) {
-        System.out.println("Updating car with ID: " + id);
-        VoitureEntity voitureEntity = voitureRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Voiture with ID " + id + " not found"));
-
-        // Check if immatriculation is being changed and if new one already exists
-        if (!voitureEntity.getImmatriculation().equals(voitureDto.getImmatriculation()) &&
-                voitureRepository.existsByImmatriculation(voitureDto.getImmatriculation())) {
-            throw new RuntimeException("Immatriculation already exists");
-        }
-
-        voitureEntity.setImmatriculation(voitureDto.getImmatriculation());
-        voitureEntity.setMarque(voitureDto.getMarque());
-        voitureEntity.setModel(voitureDto.getModel());
-        voitureEntity.setImage(voitureDto.getImage());
-
-        VoitureEntity updatedEntity = voitureRepository.saveAndFlush(voitureEntity);
-        System.out.println("Car updated, image value: " + updatedEntity.getImage());
-        return updatedEntity.getId();
-    }
+//    @Transactional
+//    public Long update(VoitureDto voitureDto, Long id) {
+//        System.out.println("Updating car with ID: " + id);
+//        VoitureEntity voitureEntity = voitureRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Voiture with ID " + id + " not found"));
+//
+//        // Check if immatriculation is being changed and if new one already exists
+//        if (!voitureEntity.getImmatriculation().equals(voitureDto.getImmatriculation()) &&
+//                voitureRepository.existsByImmatriculation(voitureDto.getImmatriculation())) {
+//            throw new RuntimeException("Immatriculation already exists");
+//        }
+//
+//        voitureEntity.setImmatriculation(voitureDto.getImmatriculation());
+//        voitureEntity.setMarque(voitureDto.getMarque());
+//        voitureEntity.setModel(voitureDto.getModel());
+//        voitureEntity.setImage(voitureDto.getImage());
+//
+//        VoitureEntity updatedEntity = voitureRepository.saveAndFlush(voitureEntity);
+//        System.out.println("Car updated, image value: " + updatedEntity.getImage());
+//        return updatedEntity.getId();
+//    }
 
     @Transactional
     public Long updateWithImage(VoitureDto voitureDto, Long id, MultipartFile file) {
