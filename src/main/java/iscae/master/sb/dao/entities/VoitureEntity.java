@@ -30,4 +30,7 @@ public class VoitureEntity {
 
     @Column(name = "model", length = 50)
     private String model;
+
+    @Column(name = "image", length = 255)
+    private String image;
 }

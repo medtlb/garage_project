@@ -18,6 +18,7 @@ public class VoitureDto {
     private String immatriculation;
     private String marque;
     private String model;
+    private String image;
 
     public VoitureEntity toEntity() {
         return VoitureEntity.builder()
@@ -26,6 +27,7 @@ public class VoitureDto {
                 .immatriculation(immatriculation)
                 .marque(marque)
                 .model(model)
+                .image(image)
                 .build();
     }
 
@@ -37,6 +39,7 @@ public class VoitureDto {
                 .immatriculation(voitureEntity.getImmatriculation())
                 .marque(voitureEntity.getMarque())
                 .model(voitureEntity.getModel())
+                .image(voitureEntity.getImage())
                 .build();
     }
 }
