@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -14,21 +17,18 @@ import lombok.NoArgsConstructor;
 public class GarageDto {
     private Long id;
     private String nom;
-    // Removed address
     private Double latitude;
     private Double longitude;
     private String telephone;
     private String email;
     private Integer capacite;
     private VehiculeCategorie categorie;
-
-// Update toEntity and fromEntity methods accordingly
+    private List<DisponibiliteDto> disponibilites;
 
     public GarageEntity toEntity() {
-        return GarageEntity.builder()
+        GarageEntity garage = GarageEntity.builder()
                 .id(id)
                 .nom(nom)
-                // Removed address
                 .latitude(latitude)
                 .longitude(longitude)
                 .telephone(telephone)
@@ -36,13 +36,14 @@ public class GarageDto {
                 .capacite(capacite)
                 .categorie(categorie)
                 .build();
+
+        return garage;
     }
 
     public static GarageDto fromEntity(GarageEntity garageEntity) {
-        return GarageDto.builder()
+        GarageDto dto = GarageDto.builder()
                 .id(garageEntity.getId())
                 .nom(garageEntity.getNom())
-                // Removed address
                 .latitude(garageEntity.getLatitude())
                 .longitude(garageEntity.getLongitude())
                 .telephone(garageEntity.getTelephone())
@@ -50,5 +51,15 @@ public class GarageDto {
                 .capacite(garageEntity.getCapacite())
                 .categorie(garageEntity.getCategorie())
                 .build();
+
+        if (garageEntity.getDisponibilites() != null) {
+            dto.setDisponibilites(garageEntity.getDisponibilites().stream()
+                    .map(DisponibiliteDto::fromEntity)
+                    .collect(Collectors.toList()));
+        } else {
+            dto.setDisponibilites(new ArrayList<>());
+        }
+
+        return dto;
     }
 }

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "garage", schema = "public", catalog = "activite1")
@@ -20,7 +22,6 @@ public class GarageEntity {
 
     @Column(name = "nom", length = 100, nullable = false)
     private String nom;
-
 
     @Column(name = "latitude")
     private Double latitude;
@@ -40,4 +41,7 @@ public class GarageEntity {
 
     @Column(name = "capacite")
     private Integer capacite;
+
+    @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DisponibiliteEntity> disponibilites = new ArrayList<>();
 }
