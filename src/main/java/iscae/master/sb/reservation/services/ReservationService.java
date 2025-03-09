@@ -127,6 +127,30 @@ public class ReservationService {
     }
 
     @Transactional
+    public Long updateStatus(Long id, String newStatus) {
+        ReservationEntity entity = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation with ID " + id + " not found"));
+
+        // Validate the status
+        if (!isValidStatus(newStatus)) {
+            throw new RuntimeException("Invalid status: " + newStatus);
+        }
+
+        // Update the status
+        entity.setStatus(newStatus);
+
+        return reservationRepository.saveAndFlush(entity).getId();
+    }
+
+    private boolean isValidStatus(String status) {
+        return status != null &&
+                (status.equals("en cours") ||
+                        status.equals("confirmé") ||
+                        status.equals("terminé") ||
+                        status.equals("annulé"));
+    }
+
+    @Transactional
     public void deleteById(Long id) {
         reservationRepository.deleteById(id);
     }

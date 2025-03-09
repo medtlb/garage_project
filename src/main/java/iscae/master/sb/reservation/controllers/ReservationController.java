@@ -1,10 +1,8 @@
 package iscae.master.sb.reservation.controllers;
 
 import iscae.master.sb.reservation.dtos.ReservationDto;
+import iscae.master.sb.reservation.dtos.StatusUpdateDto;
 import iscae.master.sb.reservation.services.ReservationService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -41,6 +39,11 @@ public class ReservationController {
     @PutMapping("/{id}")
     public Long update(@RequestBody ReservationDto reservationDto, @PathVariable("id") Long id) {
         return reservationService.update(reservationDto, id);
+    }
+
+    @PutMapping("/{id}/status")
+    public Long updateStatus(@PathVariable("id") Long id, @RequestBody StatusUpdateDto statusUpdate) {
+        return reservationService.updateStatus(id, statusUpdate.getStatus());
     }
 
     @DeleteMapping("/{id}")
